@@ -115,8 +115,6 @@ Este sistema no solo mejora la eficiencia operativa de la biblioteca, sino que t
 ### 📊 Esquema General
 Este es un resumen completo de las tablas y relaciones de la base de datos del sistema de gestión biblioteca.
 
-![Diagrama](TABLA_BIBLIOTECA.png)
-
 
 >**Usuario**
 
