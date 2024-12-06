@@ -4,10 +4,8 @@
 
 ### Enlace al prototipo en Figma
 
-![Figma](fima.png)
-
 Puedes acceder al prototipo del sistema en Figma a través del siguiente enlace:  
-[🔗 Accede al proyecto en Figma aquí](https://www.figma.com/design/Mzpvo9wVfpwevF7oNaSKRj/SISTEMA-DE-BIBLIOTECA-%7C-BASE-DE-DATOS?node-id=0-1&m=dev&t=aKSRxW9SkNl97Hxp-1)
+[🔗 Accede al proyecto en Figma aquí](https://www.figma.com/design/qEbw0wGUj4szuVZkRE92yI/Untitled?node-id=0-1&t=9pNCrB56HUAFdb2S-1)
 
 ### Tabla de Contenidos
 
