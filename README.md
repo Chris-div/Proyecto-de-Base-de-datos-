@@ -119,125 +119,80 @@ Este es un resumen completo de las tablas y relaciones de la base de datos del s
 >**Usuario**
 
 - ID_Usuario INT ***PRIMARY KEY***,
-- ID_Rol INT ***NOT NULL***,
-- ID_Rol INT ***NOT NULL***,
-- Nombre VARCHAR2(100) ***NOT NULL***,
-- Correo VARCHAR2(100) ***NOT NULL UNIQUE***,
-- Contraseña VARCHAR2(255) ***NOT NULL***,
-- Fecha_Registro DATETIME ***DEFAULT CURRENT_TIMESTAMP***,
+- Nombre VARCHAR2(45) ***NOT NULL***,
+- Correo VARCHAR2(45) ***NOT NULL UNIQUE***,
+- ape_paterno VARCHAR2(45) ***NOT NULL***,
+- ape_materno VARCHAR2(45) **NOT NULL**,
+- Contraseña VARCHAR2(100) ***NOT NULL***,
 - Telefono INT ***NOT NULL***,
-- **FOREIGN KEY** (ID_Rol) **REFERENCES** Rol(ID_Rol)
-- **FOREIGN KEY** (ID_Sede) **REFERENCES** Rol(ID_Sede)
-
-> **Rol**
-
-- ID_Rol INT ***PRIMARY KEY***,
-- Nombre_Rol VARCHAR2(50) ***NOT NULL***
-
-> **Sede**
-
-- ID_sede INT ***PRIMARY KEY***,
-- Nombre_sede VARCHAR2(50) ***NOT NULL***
-
-> **Login**
-
-- id_login INT ***PRIMARY KEY***,
-- ID_Rol INT ***NOT NULL***;
-- ID_Usuario INT ***NOT NULL***
+- rol VARCHAR2(45) ***NOT NULL***,
+- sexo VARCAHR2(45)***NOT NULL***,
+- Fecha_nacimiento DATETIME ***DEFAULT CURRENT_TIMESTAMP***,
 
 
-> **Reserva**
+> **Sedes**
+
+- IdSedes INT ***PRIMARY KEY***,
+- Nombre VARCHAR2(50) ***NOT NULL***
+
+
+> **Reservas**
 
 - ID_Reserva INT ***PRIMARY KEY***,
-- ID_Usuario INT ***NOT NULL***,
-- ID_Aula INT ***NOT NULL***,
-- Fecha_Reserva DATETIME ***DEFAULT CURRENT_TIMESTAMP***,
-- Hora_Reserva DATE,
-- ***FOREIGN KEY*** (ID_Usuario) ***REFERENCES*** Usuario(ID_Usuario),
-- ***FOREIGN KEY*** (ID_Aula) ***REFERENCES*** Aula(ID_Aula)
+- ID_Usuarios INT ***NOT NULL***,
+- Fecha_inicio DATETIME ***DEFAULT CURRENT_TIMESTAMP***,
+- Fecha_fin DATETIME ***DEFAULT CURRENT_TIMESTAMP***,
+- ***FOREIGN KEY*** (Usuario_id) ***REFERENCES*** Usuarios(IdUsuarios),
 
-> **Aula**
 
-- ID_Aula INT ***PRIMARY KEY***,
-- Nombre_Aula VARCHAR2(20) ***NOT NULL***,
-- Capacidad INT ***NOT NULL***
+> **Prestamos**
 
-> **Historial_reserva**
-
-- ID_Historial INT ***PRIMARY KEY***,
-- ID_Reserva INT ***NOT NULL***,
-- Fecha_Cambio DATETIME ***DEFAULT CURRENT_TIMESTAMP***,
-- Estado_Anterior VARCHAR2(20),
-- Estado_Actual VARCHAR2(20),
-- ***FOREIGN KEY*** (ID_Reserva) ***REFERENCES*** Reserva(ID_Reserva)
-
-> **Préstamo**
-
-- ID_Prestamo INT ***PRIMARY KEY***,
-- ID_Usuario INT ***NOT NULL***,
-- ID_Recurso INT ***NOT NULL***,
-- Fecha_Prestamo DATETIME ***DEFAULT CURRENT_TIMESTAMP***,
-- Fecha_Devolucion DATE,
-- ***FOREIGN KEY*** (ID_Usuario) ***REFERENCES*** Usuario(ID_Usuario),
-- ***FOREIGN KEY*** (ID_Recurso) ***REFERENCES*** Recurso(ID_Recurso)
+- IdPrestamo INT ***PRIMARY KEY***,
+- Fecha_prestamo DATETIME ***DEFAULT CURRENT_TIMESTAMP***,
+- Fecha_devolucion DATETIME,
+- Fecha_devolucion_real DATETIME,
+- estado VARCHAR2(45) ***NOT NULL***,
+- ***FOREIGN KEY*** (Usuarios_id) ***REFERENCES*** Usuario(IdUsuarios),
+- ***FOREIGN KEY*** (Recursos_id) ***REFERENCES*** Recurso(IdRecurso),
+- ***FOREGIN KEY*** (Ejemplares_idEjemplares) ***REFERENCIA*** Ejemplares(IdEjemplares)
 
 > **Recurso**
 
-- ID_Recurso INT ***PRIMARY KEY***,
-- Nombre_Recurso VARCHAR2(100) ***NOT NULL***,
-- Tipo_Recurso VARCHAR2(50) ***NOT NULL***
+- IdRecurso INT ***PRIMARY KEY***,
+- Nombre VARCHAR2(45) ***NOT NULL***,
+- modelo VARCHAR2(45) ***NOT NULL***,
+- estado VARCHAR2(45) ***NOT NULL***,
+-Fecha_adquisión DATETIME ***NOT NULL***
+ 
+> **Libros**
 
-> **Libro**
-
-- ID_Libro INT ***PRIMARY KEY***,
-- ID_Recurso INT ***UNIQUE NOT NULL***,
+- IdLibros INT ***PRIMARY KEY***,
+- IdRecurso INT ***UNIQUE NOT NULL***,
 - Titulo VARCHAR2(255) ***NOT NULL***,
-- ID_Autor INT ***NOT NULL***,
-- ID_Editorial INT ***NOT NULL***,
-- Fecha_Publicacion ***DATE***,
-- ***FOREIGN KEY*** (ID_Recurso) ***REFERENCES*** Recurso(ID_Recurso),
-- ***FOREIGN KEY*** (ID_Autor) ***REFERENCES*** Autor(ID_Autor),
-- ***FOREIGN KEY*** (ID_Editorial) ***REFERENCES*** Editorial(ID_Editorial)
+- IdAutor INT ***NOT NULL***,
+- IdEditorial INT ***NOT NULL***,
+- año_publicacion ***DATETIME***,
+- Genero VARCHAR2(45) ***NOT NULL***,
+- ***FOREIGN KEY*** (IdRecurso) ***REFERENCES*** Recurso(IdRecurso),
+- ***FOREIGN KEY*** (IdAutor) ***REFERENCES*** Autores(IdAutores),
+- ***FOREIGN KEY*** (IdEditoriales) ***REFERENCES*** Editoriales(IdEditorial)
 
-> **Revista**
+> **Autores**
 
-- ID_Libro INT ***PRIMARY KEY***,
-- ID_Recurso INT ***UNIQUE NOT NULL***,
-- Titulo VARCHAR2(255) ***NOT NULL***,
-- ID_Autor INT ***NOT NULL***,
-- ID_Editorial INT ***NOT NULL***,
-- Fecha_Publicacion ***DATE***,
-- ***FOREIGN KEY*** (ID_Recurso) ***REFERENCES*** Recurso(ID_Recurso),
-- ***FOREIGN KEY*** (ID_Autor) ***REFERENCES*** Autor(ID_Autor),
-- ***FOREIGN KEY*** (ID_Editorial) ***REFERENCES*** Editorial(ID_Editorial)
+- IdAutores INT ***PRIMARY KEY***,
+- Nombre VARCHAR2(45) ***NOT NULL***,
+- ape_paterno VARCHAR2(45) ***NOT NULL***,
+- ape_materno VARCHAR2(45) ***NOT NULL***,
+- país VARCHAR2(45) ***NOT NULL***,
+- Fecha_nacimineto ***DATETIME***
 
+> **Editoriales**
 
-> **Autor**
-
-- ID_Autor INT ***PRIMARY KEY***,
-- Nombre_Autor VARCHAR2(50) ***NOT NULL***
-
-> **Editorial**
-
-- ID_Editorial INT ***PRIMARY KEY***,
-- Nombre_Autor VARCHAR2(50) ***NOT NULL***
-
-> **Tesis**
-
-- ID_Tesis INT ***PRIMARY KEY***,
-- ID_Recurso INT ***UNIQUE NOT NULL***,
-- Titulo VARCHAR2(255) ***NOT NULL***,
-- ID_Carrera INT ***NOT NULL***,
-- Fecha_Publicacion ***DATE***,
-- ***FOREIGN KEY*** (ID_Recurso) ***REFERENCES*** Recurso(ID_Recurso),
-- ***FOREIGN KEY*** (ID_Carrera) ***REFERENCES*** Carrera(ID_Carrera),
-
-> **Carrera**
-
-- ID_Carrera INT ***PRIMARY KEY***,
-- ID_Departamento INT ***UNIQUE NOT NULL***,
-- Nombre_Carrera VARCHAR2(100) ***NOT NUL***
--  ***FOREIGN KEY*** (ID_Departamento) ***REFERENCES*** Departamento(ID_Departamento)
+- IdEditorial INT ***PRIMARY KEY***,
+- Nombre VARCHAR2(45) ***NOT NULL***
+- dirección VARCHAR2(45) ***NOT NULL***,
+- telefono VARCHAR (45)  ***NOT NULL***,
+- Correo   VARCHAR (45)  ***NOT NULL**,
 
 > **Departamento**
 
@@ -246,51 +201,75 @@ Este es un resumen completo de las tablas y relaciones de la base de datos del s
 
 ---
 
+>**Ebook**
+- Idebook INT ***PRIMARY KEY***,
+- titulo VARCHAR(45) ***NOT NULL***,
+- año_publicacion ***DATETIME***,
+- descripcion VARCHAR(45) ***NOT NULL***,
+- idioma VARCHAR(45) ***NOT NULL***,
+- eISBN VARCHAR(45)  ***NOT NULL***,
+- num_paginas VARCHAR(45) ***NOT NULL***,
+- descriptores VARCHAR(45) ***NOT NULL***,
+- url VARCHAR(45) ***NOT NULL***,
+- Editoriales_id INT ***NOT NULL***,
+- Autores_id INT ***NOT NULL***,
+- ***FOREIGN KEY*** (Editoriales_id) ***REFERENCES*** Editoriales(IdEditorial),
+- ***FOREIGN KEY*** (Autores_id) ***REFERENCES*** Autores(IdAutores)
+
+>**Penalizaciones**
+- Id INT  PRIMARY KEY,
+- tipo VARCHAR(45) ***NOT NULL***,
+- estado VARCHAR(45) ***NOT NULL***,
+- observacion VARCHAR(45) ***NOT NULL***,
+- fecha_inicio DATETIME ***NOT NULL***,
+- fecha_fin DATETIME ***NOT NULL***,
+- Usuarios_id INT ***NOT NULL***,
+- ***FOREIGN KEY*** (Usuarios_id) ***REFERENCES*** Usuarios(idUsuarios)
+
+- **Espacio** 
+- idEspacio INT PRIMARY KEY ***NOT NULL***,
+- tipo VARCHAR(45) ***NOT NULL***,
+- capacidad INT ***NOT NULL***,
+- nombre VARCHAR(45) ***NOT NULL***,
+- estado VARCHAR(45) ***NOT NULL***,
+- caracteristicas VARCHAR(120) ***NOT NULLL***,
+- ***FOREIGN KEY*** (Sedes_id) ***REFRENCIA*** Sedes(IdSedes)
+
 ## 🔗 Relaciones Principales 🔗
 
-1. **Login** se relaciona con:
+1.**Usuarios** se relaciona con:
 
-   - **Rol**
-   - **Usuario**
-
-2. **Rol**, **Sede** se relacionan con:
-
-   - **Usuario**
+ -**Reservas**,**Préstamos**,**Comentarios**
 
 
-3. **Citas** se conecta a:
+2.**Sedes** se relaciona a:
 
-   - **Pacientes**, **Médicos**
-   - **Consultas**
-   - **Reservas**
+   -**Espacio**
 
-4. **Reserva**, **Prestamo** tienen una relación con:
 
-   - **Usuario**
+3.**Recursos** se conecta a:
 
-5. **Reserva** se relaciona con:
+   -**Ejemplares**,**Préstamos**
 
-   - **Historial_reserva**
-   - **Aula**
 
-6. **Prestamo** está relacionada con:
+4.**Reservas** tiene una relación con:
+   
+   -**Espacio**,**Usuarios**
 
-   - **Historial_prestamo**
-   - **Recurso**
 
-7. **Libro**, **Revista** y **Tesis** están relacionados con:
+5.**Prestamos** está relacionado con:
+   
+   -**Usuarios**,**Recursos**
 
-   - **Recurso**.
 
-7. Tanto **Libros** como **Revistas** están relacionada con:
+6.**Libros** se relaciona con:
+   
+   -**Editoriales**,**Departamentos**,**Autores (mediante Libros_has_Autores)**
 
-   - **Autor**
-   - **Editorial**
 
-8. **Tesis** está asociada a:
-   - **Carrera** y este a su vez, tiene relación con:
-     - **Departamento** 
-
+7.**Ebooks** tiene una relación con:
+   
+   -**Editoriales**,**Autores**
 
 ---
 
